@@ -60,7 +60,8 @@ public class RestApiController {
     public JsonObject 
     	createCover( 
     				@RequestParam(value="coverName", defaultValue="") String coverName,
-    				@RequestParam(value="fileName", defaultValue="") String fileName
+    				@RequestParam(value="fileName", defaultValue="") String fileName,
+    				@RequestParam(value="author", defaultValue="") String author
     			){
     	
     			String message = "Document successfully created on MongoDB.";
@@ -72,7 +73,7 @@ public class RestApiController {
     			}
     			else {
 	    			try {
-	    				Cover cover = new Cover(fileName, coverName);
+	    				Cover cover = new Cover(fileName, coverName, author);
 	    				repository.save(cover);
 	    			}
 	    			catch(Exception eee) {

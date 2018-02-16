@@ -9,7 +9,7 @@ public class Cover {
 	
 	public String fileName;
 	public String name;
-	public String type;
+	public String type = "local";
 	public String author;
 	public short year;
 	public String location;
@@ -18,9 +18,10 @@ public class Cover {
 		
 	}
 	
-	public Cover(String fileName, String name) {
+	public Cover(String fileName, String name, String author) {
 		this.fileName = fileName;
 		this.name = name;
+		this.author = author;
 	}
 	
     @Override
