@@ -80,6 +80,21 @@ public class RestApiController {
     		
     		return cover;
     }
+
+    @RequestMapping("/getRemoteCoverCount")
+    public int 
+    	getRemoteCoverCount(){
+    	
+    		ArrayList<Cover> covers = new ArrayList<Cover>();
+    		
+			String message = "";
+			String result = "success";
+    		
+    		covers = (ArrayList<Cover>)repository.findByType("remote");
+    		
+    		return covers.size();
+    }    
+    
     
     @RequestMapping(value="/createCover", produces = MediaType.APPLICATION_JSON_VALUE)
     public JsonObject 
