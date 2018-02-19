@@ -1,6 +1,7 @@
 package com.salvocuccurullo.apps.mongo;
 
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -55,6 +56,30 @@ public class RestApiController {
     		
     		return covers;
     }    
+
+    @RequestMapping("/getRandomCover")
+    public Cover 
+    	getRandomCover(){
+    	
+    		ArrayList<Cover> covers = new ArrayList<Cover>();
+    		
+			String message = "";
+			String result = "success";
+    		
+    		covers = (ArrayList<Cover>)repository.findByType("remote");
+    		
+    		if (covers.size()==0)
+    			return null;
+    		
+    		int randomNum = ThreadLocalRandom.current().nextInt(0, covers.size());
+    		
+    		Cover cover = covers.get(randomNum);
+    		System.out.println("------- Random Cover -----");
+    		System.out.println(cover.fileName + " -> " + cover.name);
+    		System.out.println("---------------------");
+    		
+    		return cover;
+    }
     
     @RequestMapping(value="/createCover", produces = MediaType.APPLICATION_JSON_VALUE)
     public JsonObject 
@@ -74,6 +99,8 @@ public class RestApiController {
     			else {
 	    			try {
 	    				Cover cover = new Cover(fileName, coverName, author);
+	    				cover.setLocation(fileName);
+	    				cover.setType("remote");
 	    				repository.save(cover);
 	    			}
 	    			catch(Exception eee) {

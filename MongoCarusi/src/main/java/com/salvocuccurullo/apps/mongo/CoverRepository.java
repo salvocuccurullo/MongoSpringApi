@@ -8,5 +8,6 @@ public interface CoverRepository extends MongoRepository<Cover, String> {
 	public Cover findByFileName(String fileName);
     public List<Cover> findByName(String name);
     public List<Cover> findAll();
+    public List<Cover> findByType(String type);
 	
 }
