@@ -81,9 +81,9 @@ public class RestApiController {
     		return cover;
     }
 
-    @RequestMapping("/getRemoteCoverCount")
-    public int 
-    	getRemoteCoverCount(){
+    @RequestMapping("/getRemoteCovers")
+    public ArrayList<Cover> 
+    	getRemoteCovers(){
     	
     		ArrayList<Cover> covers = new ArrayList<Cover>();
     		
@@ -92,7 +92,7 @@ public class RestApiController {
     		
     		covers = (ArrayList<Cover>)repository.findByType("remote");
     		
-    		return covers.size();
+    		return covers;
     }    
     
     
