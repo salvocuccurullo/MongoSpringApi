@@ -1,6 +1,9 @@
 package com.salvocuccurullo.apps.mongo;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,10 +51,13 @@ public class RestApiController {
 			String result = "success";
     		
     		covers = (ArrayList<Cover>)repository.findAll();
-    		
+
+    		// To be replaced with log4j
+    		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    		Date date = new Date();    		
+    		System.out.println(dateFormat.format(date).toString() + "\tGet all covers: " + new Integer(covers.size()).toString() + " found.");
     		for (Cover cover: covers) {
-    			System.out.println(cover.fileName + " -> " + cover.name);
-    			System.out.println("---------------------");
+        		System.out.println(dateFormat.format(date).toString() + "\t(" + cover.type + ") " + cover.fileName + " -> " + cover.name);
     		}
     		
     		return covers;
@@ -74,9 +80,11 @@ public class RestApiController {
     		int randomNum = ThreadLocalRandom.current().nextInt(0, covers.size());
     		
     		Cover cover = covers.get(randomNum);
-    		System.out.println("------- Random Cover -----");
-    		System.out.println(cover.fileName + " -> " + cover.name);
-    		System.out.println("---------------------");
+    		
+    		// To be replaced with log4j
+    		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    		Date date = new Date();
+    		System.out.println(dateFormat.format(date).toString() + "\tNew random cover requested: " + cover.fileName + " -> " + cover.name);
     		
     		return cover;
     }
