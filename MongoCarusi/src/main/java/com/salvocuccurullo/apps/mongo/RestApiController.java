@@ -1,12 +1,12 @@
 package com.salvocuccurullo.apps.mongo;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +17,11 @@ public class RestApiController {
 
 	@Autowired
 	private CoverRepository repository;
+	
+	@Autowired
+	private Environment env;
+	
+	private static Logger logger = LogManager.getLogger(RestApiController.class);
 
     @RequestMapping("/getCovers")
     public ArrayList<Cover> 
@@ -26,7 +31,7 @@ public class RestApiController {
     		
 			String message = "";
 			String result = "success";
-    		
+			
     		if (coverName.equals("")) {
     			return covers;
     		}
@@ -34,8 +39,8 @@ public class RestApiController {
     		covers = (ArrayList<Cover>)repository.findByName(coverName);
     		
     		for (Cover cover: covers) {
-    			System.out.println(cover.fileName + " -> " + cover.name);
-    			System.out.println("---------------------");
+    			logger.info(cover.fileName + " -> " + cover.name);
+    			logger.info("---------------------");
     		}
     		
     		return covers;
@@ -49,15 +54,12 @@ public class RestApiController {
     		
 			String message = "";
 			String result = "success";
-    		
-    		covers = (ArrayList<Cover>)repository.findAll();
 
-    		// To be replaced with log4j
-    		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    		Date date = new Date();    		
-    		System.out.println(dateFormat.format(date).toString() + "\tGet all covers: " + new Integer(covers.size()).toString() + " found.");
+    		covers = (ArrayList<Cover>)repository.findAll();
+    		
+    		logger.info("Get all covers: " + new Integer(covers.size()).toString() + " found.");
     		for (Cover cover: covers) {
-        		System.out.println(dateFormat.format(date).toString() + "\t(" + cover.type + ") " + cover.fileName + " -> " + cover.name);
+    			logger.info("(" + cover.type + ") " + cover.fileName + " -> " + cover.name);
     		}
     		
     		return covers;
@@ -80,11 +82,7 @@ public class RestApiController {
     		int randomNum = ThreadLocalRandom.current().nextInt(0, covers.size());
     		
     		Cover cover = covers.get(randomNum);
-    		
-    		// To be replaced with log4j
-    		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    		Date date = new Date();
-    		System.out.println(dateFormat.format(date).toString() + "\tNew random cover requested: " + cover.fileName + " -> " + cover.name);
+    		logger.info("New random cover requested: " + cover.fileName + " -> " + cover.name);
     		
     		return cover;
     }
@@ -121,8 +119,9 @@ public class RestApiController {
     			}
     			else {
 	    			try {
+	    				String remotePath = env.getProperty("remote.repo.baseurl","");
 	    				Cover cover = new Cover(fileName, coverName, author);
-	    				cover.setLocation(fileName);
+	    				cover.setLocation(remotePath+fileName);
 	    				cover.setType("remote");
 	    				repository.save(cover);
 	    			}
