@@ -107,7 +107,8 @@ public class RestApiController {
     	createCover( 
     				@RequestParam(value="coverName", defaultValue="") String coverName,
     				@RequestParam(value="fileName", defaultValue="") String fileName,
-    				@RequestParam(value="author", defaultValue="") String author
+    				@RequestParam(value="author", defaultValue="") String author,
+    				@RequestParam(value="year", defaultValue="0") short year
     			){
     	
     			String message = "Document successfully created on MongoDB.";
@@ -123,6 +124,7 @@ public class RestApiController {
 	    				Cover cover = new Cover(fileName, coverName, author);
 	    				cover.setLocation(remotePath+fileName);
 	    				cover.setType("remote");
+	    				cover.setYear(year);
 	    				repository.save(cover);
 	    			}
 	    			catch(Exception eee) {
