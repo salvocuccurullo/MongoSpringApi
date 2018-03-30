@@ -8,9 +8,12 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 public class RestApiController {
@@ -136,7 +139,39 @@ public class RestApiController {
     			JsonObject json = new JsonObject(message,result);
     		    		
     		return json;
-    }    
+    }
     
+	@RequestMapping(value = "/createCover2", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
+	public JsonObject 
+		createCover2(@RequestBody Cover cover, UriComponentsBuilder ucBuilder) {
+	    logger.info("Creating Cover : {}", cover);
+	
+	    String message = "Document successfully created on MongoDB.";
+		String result = "success";
+
+		if (cover.name.equals("") || cover.fileName.equals("")) {
+			message = "Cover name and/or file Name cannot be blank!";
+			result = "failure";	
+		}
+		else {
+			try {
+				String remotePath = env.getProperty("remote.repo.baseurl","");
+				Cover ncover = new Cover(cover.fileName, cover.name, cover.author);
+				ncover.setLocation(remotePath + cover.fileName);
+				ncover.setType("remote");
+				ncover.setYear(cover.year);
+				repository.save(ncover);
+			}
+			catch(Exception eee) {
+    			message = eee.toString();
+    			result = "failure";	
+			}
+		}
+		
+		JsonObject json = new JsonObject(message,result);
+	    		
+	return json;
+
+	}
 }
 

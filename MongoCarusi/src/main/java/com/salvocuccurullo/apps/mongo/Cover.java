@@ -1,5 +1,8 @@
 package com.salvocuccurullo.apps.mongo;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import org.springframework.data.annotation.Id;
 
 public class Cover {
@@ -13,6 +16,7 @@ public class Cover {
 	public String author;
 	public short year;
 	public String location;
+	public String created;
 	
 	public Cover() {
 		
@@ -22,6 +26,7 @@ public class Cover {
 		this.fileName = fileName;
 		this.name = name;
 		this.author = author;
+		this.created = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
 	}
 	
     @Override
