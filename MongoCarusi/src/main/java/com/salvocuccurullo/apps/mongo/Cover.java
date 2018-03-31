@@ -17,9 +17,10 @@ public class Cover {
 	public short year;
 	public String location;
 	public String created;
+	public String username;
 	
 	public Cover() {
-		
+		this.created = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
 	}
 	
 	public Cover(String fileName, String name, String author) {
@@ -90,6 +91,14 @@ public class Cover {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	

@@ -160,6 +160,7 @@ public class RestApiController {
 				ncover.setLocation(remotePath + cover.fileName);
 				ncover.setType("remote");
 				ncover.setYear(cover.year);
+				ncover.setUsername(cover.username);
 				repository.save(ncover);
 			}
 			catch(Exception eee) {
