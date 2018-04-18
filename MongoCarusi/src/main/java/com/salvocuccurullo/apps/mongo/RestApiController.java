@@ -149,19 +149,34 @@ public class RestApiController {
 	    String message = "Document successfully created on MongoDB.";
 		String result = "success";
 
-		if (cover.name.equals("") || cover.fileName.equals("")) {
+		if (cover.name == null || cover.fileName == null || cover.name.equals("") || cover.fileName.equals("")) {
 			message = "Cover name and/or file Name cannot be blank!";
 			result = "failure";	
 		}
 		else {
 			try {
+				
 				String remotePath = env.getProperty("remote.repo.baseurl","");
-				Cover ncover = new Cover(cover.fileName, cover.name, cover.author);
-				ncover.setLocation(remotePath + cover.fileName);
-				ncover.setType("remote");
-				ncover.setYear(cover.year);
-				ncover.setUsername(cover.username);
-				repository.save(ncover);
+				Cover e_cover = (Cover)repository.findById(cover.id);
+				
+				if (e_cover != null) {
+						e_cover.setName(cover.name);
+						e_cover.setAuthor(cover.author);
+						e_cover.setFileName(cover.fileName);
+						e_cover.setLocation(remotePath + cover.fileName);
+						e_cover.setUsername(cover.username);
+						e_cover.setYear(cover.year);
+						repository.save(e_cover);
+						message = "Document successfully updated on MongoDB.";
+				}
+				else {
+					Cover ncover = new Cover(cover.fileName, cover.name, cover.author);
+					ncover.setLocation(remotePath + cover.fileName);
+					ncover.setType("remote");
+					ncover.setYear(cover.year);
+					ncover.setUsername(cover.username);
+					repository.save(ncover);
+				}
 			}
 			catch(Exception eee) {
     			message = eee.toString();
