@@ -1,9 +1,12 @@
 package com.salvocuccurullo.apps.mongo;
 
+import java.util.HashMap;
+
 public class JsonObject {
 
 	String message = "";
 	String result = "";
+	HashMap<String,Object> payload = new HashMap<String,Object>();
 	
 	public JsonObject(String message, String result) {
 		this.message = message;
@@ -21,6 +24,14 @@ public class JsonObject {
 	}
 	public void setResult(String result) {
 		this.result = result;
+	}
+
+	public HashMap<String, Object> getPayload() {
+		return payload;
+	}
+
+	public void setPayload(HashMap<String, Object> payload) {
+		this.payload = payload;
 	}
 	
 	

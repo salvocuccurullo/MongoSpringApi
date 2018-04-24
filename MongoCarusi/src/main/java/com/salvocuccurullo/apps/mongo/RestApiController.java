@@ -1,6 +1,7 @@
 package com.salvocuccurullo.apps.mongo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.logging.log4j.LogManager;
@@ -102,7 +103,43 @@ public class RestApiController {
     		covers = (ArrayList<Cover>)repository.findByType("remote");
     		
     		return covers;
-    }    
+    }
+
+    @RequestMapping("/getStats")
+    public JsonObject 
+    	getStats(){
+
+		String message = "";
+		String result = "success";
+	
+		JsonObject res = new JsonObject(message, result);
+		HashMap<String,Object> payload = new HashMap<String,Object>();
+
+		try {
+			ArrayList<Cover> covers = (ArrayList<Cover>)repository.findByType("remote");
+			payload.put("remote_covers", covers.size());
+
+			covers = (ArrayList<Cover>)repository.findByType("local");
+			payload.put("local_covers", covers.size());
+
+			covers = (ArrayList<Cover>)repository.findByNullYearQuery();
+			payload.put("covers_null_year", covers.size());
+
+			covers = (ArrayList<Cover>)repository.findByNullUserQuery();
+			payload.put("covers_null_user", covers.size());
+			
+		}
+		catch(Exception eee){
+			message = "failure";
+			result = eee.toString();
+		}
+
+		res.setMessage(message);
+		res.setResult(result);
+		res.setPayload(payload);
+		
+		return res;
+    }
     
     
     @RequestMapping(value="/createCover", produces = MediaType.APPLICATION_JSON_VALUE)
