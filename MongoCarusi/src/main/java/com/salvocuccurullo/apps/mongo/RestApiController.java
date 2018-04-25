@@ -39,12 +39,13 @@ public class RestApiController {
     		if (coverName.equals("")) {
     			return covers;
     		}
-    	
+
+    		logger.info("Get covers by name called. Query param: " + coverName);
     		covers = (ArrayList<Cover>)repository.findByName(coverName);
-    		
+    		logger.info("Get covers by name result:" + new Integer(covers.size()).toString() + " covers found.");
+
     		for (Cover cover: covers) {
-    			logger.info(cover.fileName + " -> " + cover.name);
-    			logger.info("---------------------");
+    			logger.debug(cover.fileName + " -> " + cover.name);
     		}
     		
     		return covers;
@@ -63,7 +64,7 @@ public class RestApiController {
     		
     		logger.info("Get all covers: " + new Integer(covers.size()).toString() + " found.");
     		for (Cover cover: covers) {
-    			logger.info("(" + cover.type + ") " + cover.fileName + " -> " + cover.name);
+    			logger.debug("(" + cover.type + ") " + cover.fileName + " -> " + cover.name);
     		}
     		
     		return covers;
@@ -99,7 +100,8 @@ public class RestApiController {
     		
 			String message = "";
 			String result = "success";
-    		
+			
+			logger.info("Get remote covers called.");
     		covers = (ArrayList<Cover>)repository.findByType("remote");
     		
     		return covers;
@@ -109,6 +111,8 @@ public class RestApiController {
     public JsonObject 
     	getStats(){
 
+    	logger.info("Get stats called.");
+    	
 		String message = "";
 		String result = "success";
 	
@@ -130,6 +134,7 @@ public class RestApiController {
 			
 		}
 		catch(Exception eee){
+			logger.error(eee.toString());
 			message = "failure";
 			result = eee.toString();
 		}
@@ -181,13 +186,18 @@ public class RestApiController {
 	@RequestMapping(value = "/createCover2", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
 	public JsonObject 
 		createCover2(@RequestBody Cover cover, UriComponentsBuilder ucBuilder) {
-	    logger.info("Creating Cover : {}", cover);
+	    
+		logger.info("Create/Update Cover called");
 	
 	    String message = "Document successfully created on MongoDB.";
 		String result = "success";
 
-		if (cover.name == null || cover.fileName == null || cover.name.equals("") || cover.fileName.equals("")) {
-			message = "Cover name and/or file Name cannot be blank!";
+		if (cover.name == null || cover.author == null || cover.author.equals("") || cover.author.equals("")) {				// GENERAL CHECK NAME AND AUTHOR ARE MANDATORY
+			message = "Cover name and author cannot be blank!";
+			result = "failure";	
+		}
+		else if ( (cover.id == null || cover.id.equals("")) && ( cover.fileName == null || cover.fileName.equals("")) ) {		// NEW COVER CASE - FILE NAME CANNOT BE NULL
+			message = "Cover file Name cannot be blank!";
 			result = "failure";	
 		}
 		else {
@@ -196,17 +206,35 @@ public class RestApiController {
 				String remotePath = env.getProperty("remote.repo.baseurl","");
 				Cover e_cover = (Cover)repository.findById(cover.id);
 				
-				if (e_cover != null) {
+				if (e_cover != null) {						// UPDATE CASE
+					
+						String location = "";
+						String fileName = "";
+						short year = 0;
+						if (cover.fileName != null && !cover.fileName.equals("")) {
+							fileName = cover.fileName;
+							location = remotePath + cover.fileName;
+						}
+						else {
+							fileName = e_cover.fileName;
+							location = e_cover.location;
+						}
+						
+						if (cover.year != 0)
+							year = cover.year;
+						else
+							year = e_cover.year;
+
 						e_cover.setName(cover.name);
 						e_cover.setAuthor(cover.author);
-						e_cover.setFileName(cover.fileName);
-						e_cover.setLocation(remotePath + cover.fileName);
+						e_cover.setFileName(fileName);
+						e_cover.setLocation(location);
 						e_cover.setUsername(cover.username);
-						e_cover.setYear(cover.year);
+						e_cover.setYear(year);
 						repository.save(e_cover);
 						message = "Document successfully updated on MongoDB.";
 				}
-				else {
+				else {										// INSERT CASE
 					Cover ncover = new Cover(cover.fileName, cover.name, cover.author);
 					ncover.setLocation(remotePath + cover.fileName);
 					ncover.setType("remote");
@@ -216,6 +244,7 @@ public class RestApiController {
 				}
 			}
 			catch(Exception eee) {
+				logger.error(eee.toString());
     			message = eee.toString();
     			result = "failure";	
 			}
