@@ -1,6 +1,7 @@
 package com.salvocuccurullo.apps.mongo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -145,44 +146,7 @@ public class RestApiController {
 		
 		return res;
     }
-    
-    
-    @RequestMapping(value="/createCover", produces = MediaType.APPLICATION_JSON_VALUE)
-    public JsonObject 
-    	createCover( 
-    				@RequestParam(value="coverName", defaultValue="") String coverName,
-    				@RequestParam(value="fileName", defaultValue="") String fileName,
-    				@RequestParam(value="author", defaultValue="") String author,
-    				@RequestParam(value="year", defaultValue="0") short year
-    			){
-    	
-    			String message = "Document successfully created on MongoDB.";
-    			String result = "success";
-    	
-    			if (coverName.equals("") || fileName.equals("")) {
-        			message = "Cover name and/or file Name cannot be blank!";
-        			result = "failure";	
-    			}
-    			else {
-	    			try {
-	    				String remotePath = env.getProperty("remote.repo.baseurl","");
-	    				Cover cover = new Cover(fileName, coverName, author);
-	    				cover.setLocation(remotePath+fileName);
-	    				cover.setType("remote");
-	    				cover.setYear(year);
-	    				repository.save(cover);
-	    			}
-	    			catch(Exception eee) {
-	        			message = eee.toString();
-	        			result = "failure";	
-	    			}
-    			}
-    			
-    			JsonObject json = new JsonObject(message,result);
-    		    		
-    		return json;
-    }
-    
+        
 	@RequestMapping(value = "/createCover2", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
 	public JsonObject 
 		createCover2(@RequestBody Cover cover, UriComponentsBuilder ucBuilder) {
@@ -231,6 +195,7 @@ public class RestApiController {
 						e_cover.setLocation(location);
 						e_cover.setUsername(cover.username);
 						e_cover.setYear(year);
+						e_cover.setUpdate_ts(new Date());
 						repository.save(e_cover);
 						message = "Document successfully updated on MongoDB.";
 				}

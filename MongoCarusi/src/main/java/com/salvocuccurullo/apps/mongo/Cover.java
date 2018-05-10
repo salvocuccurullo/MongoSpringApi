@@ -2,6 +2,7 @@ package com.salvocuccurullo.apps.mongo;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 
@@ -18,6 +19,8 @@ public class Cover {
 	public String location;
 	public String created;
 	public String username;
+	public Date create_ts;
+	public Date update_ts;
 	
 	public Cover() {
 		this.created = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
@@ -27,7 +30,34 @@ public class Cover {
 		this.fileName = fileName;
 		this.name = name;
 		this.author = author;
+		this.create_ts = new Date();
+		this.update_ts = new Date();
 		this.created = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
+	}
+	
+	
+	public String getCreated() {
+		return created;
+	}
+
+	public void setCreated(String created) {
+		this.created = created;
+	}
+
+	public Date getCreate_ts() {
+		return create_ts;
+	}
+
+	public void setCreate_ts(Date create_ts) {
+		this.create_ts = create_ts;
+	}
+
+	public Date getUpdate_ts() {
+		return update_ts;
+	}
+
+	public void setUpdate_ts(Date update_ts) {
+		this.update_ts = update_ts;
 	}
 	
     @Override
