@@ -9,18 +9,18 @@ import org.springframework.data.annotation.Id;
 public class Cover {
 
 	@Id
-	public String id;
+	private String id;
 	
-	public String fileName;
-	public String name;
-	public String type = "local";
-	public String author;
-	public short year;
-	public String location;
-	public String created;
-	public String username;
-	public Date create_ts;
-	public Date update_ts;
+	private String fileName;
+	private String name;
+	private String type = "local";
+	private String author;
+	private short year;
+	private String location;
+	private String created;
+	private String username;
+	private Date create_ts;
+	private Date update_ts;
 	
 	public Cover() {
 		this.created = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
@@ -131,5 +131,11 @@ public class Cover {
 		this.username = username;
 	}
 
+	public boolean isNullOrEmpty() {
+		return this.name == null || this.author == null || this.name.equals("") || this.author.equals("");
+	}
 	
+	public boolean idNullButFileName() {
+		return (this.id == null || this.id.equals("")) && ( this.fileName == null || this.fileName.equals(""));
+	}
 }

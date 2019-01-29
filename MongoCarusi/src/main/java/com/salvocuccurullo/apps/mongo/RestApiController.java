@@ -46,7 +46,7 @@ public class RestApiController {
     		logger.info("Get covers by name result:" + new Integer(covers.size()).toString() + " covers found.");
 
     		for (Cover cover: covers) {
-    			logger.debug(cover.fileName + " -> " + cover.name);
+    			logger.debug(cover.getFileName() + " -> " + cover.getName());
     		}
     		
     		return covers;
@@ -65,7 +65,7 @@ public class RestApiController {
     		
     		logger.info("Get all covers: " + new Integer(covers.size()).toString() + " found.");
     		for (Cover cover: covers) {
-    			logger.debug("(" + cover.type + ") " + cover.fileName + " -> " + cover.name);
+    			logger.debug("(" + cover.getType() + ") " + cover.getFileName() + " -> " + cover.getName());
     		}
     		
     		return covers;
@@ -88,7 +88,7 @@ public class RestApiController {
     		int randomNum = ThreadLocalRandom.current().nextInt(0, covers.size());
     		
     		Cover cover = covers.get(randomNum);
-    		logger.info("New random cover requested: " + cover.fileName + " -> " + cover.name);
+    		logger.info("New random cover requested: " + cover.getFileName() + " -> " + cover.getName());
     		
     		return cover;
     }
@@ -156,11 +156,11 @@ public class RestApiController {
 	    String message = "Document successfully created on MongoDB.";
 		String result = "success";
 
-		if (cover.name == null || cover.author == null || cover.author.equals("") || cover.author.equals("")) {				// GENERAL CHECK NAME AND AUTHOR ARE MANDATORY
+		if (cover.isNullOrEmpty()) {				// GENERAL CHECK NAME AND AUTHOR ARE MANDATORY
 			message = "Cover name and author cannot be blank!";
 			result = "failure";	
 		}
-		else if ( (cover.id == null || cover.id.equals("")) && ( cover.fileName == null || cover.fileName.equals("")) ) {		// NEW COVER CASE - FILE NAME CANNOT BE NULL
+		else if ( cover.idNullButFileName() ) {		// NEW COVER CASE - FILE NAME CANNOT BE NULL
 			message = "Cover file Name cannot be blank!";
 			result = "failure";	
 		}
@@ -168,43 +168,43 @@ public class RestApiController {
 			try {
 				
 				String remotePath = env.getProperty("remote.repo.baseurl","");
-				Cover e_cover = (Cover)repository.findById(cover.id);
+				Cover e_cover = (Cover)repository.findById(cover.getId());
 				
 				if (e_cover != null) {						// UPDATE CASE
 					
 						String location = "";
 						String fileName = "";
 						short year = 0;
-						if (cover.fileName != null && !cover.fileName.equals("")) {
-							fileName = cover.fileName;
-							location = remotePath + cover.fileName;
+						if (cover.getFileName() != null && !cover.getFileName().equals("")) {
+							fileName = cover.getFileName();
+							location = remotePath + cover.getFileName();
 						}
 						else {
-							fileName = e_cover.fileName;
-							location = e_cover.location;
+							fileName = e_cover.getFileName();
+							location = e_cover.getLocation();
 						}
 						
-						if (cover.year != 0)
-							year = cover.year;
+						if (cover.getYear() != 0)
+							year = cover.getYear();
 						else
-							year = e_cover.year;
+							year = e_cover.getYear();
 
-						e_cover.setName(cover.name);
-						e_cover.setAuthor(cover.author);
+						e_cover.setName(cover.getName());
+						e_cover.setAuthor(cover.getAuthor());
 						e_cover.setFileName(fileName);
 						e_cover.setLocation(location);
-						e_cover.setUsername(cover.username);
+						e_cover.setUsername(cover.getUsername());
 						e_cover.setYear(year);
 						e_cover.setUpdate_ts(new Date());
 						repository.save(e_cover);
 						message = "Document successfully updated on MongoDB.";
 				}
 				else {										// INSERT CASE
-					Cover ncover = new Cover(cover.fileName, cover.name, cover.author);
-					ncover.setLocation(remotePath + cover.fileName);
+					Cover ncover = new Cover(cover.getFileName(), cover.getName(), cover.getAuthor());
+					ncover.setLocation(remotePath + cover.getFileName());
 					ncover.setType("remote");
-					ncover.setYear(cover.year);
-					ncover.setUsername(cover.username);
+					ncover.setYear(cover.getYear());
+					ncover.setUsername(cover.getUsername());
 					repository.save(ncover);
 				}
 			}
