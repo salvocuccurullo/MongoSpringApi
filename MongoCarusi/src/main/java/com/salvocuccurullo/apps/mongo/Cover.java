@@ -19,6 +19,8 @@ public class Cover {
 	private String location;
 	private String created;
 	private String username;
+	private boolean visibleToAll = true;
+
 	private Date create_ts;
 	private Date update_ts;
 	
@@ -137,5 +139,13 @@ public class Cover {
 	
 	public boolean idNullButFileName() {
 		return (this.id == null || this.id.equals("")) && ( this.fileName == null || this.fileName.equals(""));
+	}
+	
+	public boolean isVisibleToAll() {
+		return visibleToAll;
+	}
+
+	public void setVisibleToAll(boolean visibleToAll) {
+		this.visibleToAll = visibleToAll;
 	}
 }

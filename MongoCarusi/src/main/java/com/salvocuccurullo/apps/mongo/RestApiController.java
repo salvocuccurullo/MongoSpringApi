@@ -168,7 +168,7 @@ public class RestApiController {
 			try {
 				
 				String remotePath = env.getProperty("remote.repo.baseurl","");
-				Cover e_cover = (Cover)repository.findById(cover.getId());
+				Cover e_cover = (Cover)repository.getById(cover.getId());
 				
 				if (e_cover != null) {						// UPDATE CASE
 					
