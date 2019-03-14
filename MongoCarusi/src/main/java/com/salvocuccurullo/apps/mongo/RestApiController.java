@@ -3,6 +3,8 @@ package com.salvocuccurullo.apps.mongo;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.logging.log4j.LogManager;
@@ -93,6 +95,30 @@ public class RestApiController {
     		return cover;
     }
 
+    @RequestMapping("/getRandomMultiCovers")
+    public Set<Cover> 
+    	getRandomCovers(){
+    	
+       	logger.info("Get n random covers called.");
+    	
+    		ArrayList<Cover> covers = new ArrayList<Cover>();
+    		LinkedHashSet<Cover> randomCovers = new LinkedHashSet<Cover>();
+    		int coversToRetrieve = 3;
+
+    		covers = (ArrayList<Cover>)repository.findByType("remote");
+    		
+    		if (covers.size()==0)
+    			return null;
+    		
+    		while (randomCovers.size() != coversToRetrieve) {
+    			int randomNum = ThreadLocalRandom.current().nextInt(0, covers.size());
+    			Cover cover = covers.get(randomNum);
+    			randomCovers.add(cover);
+    		}
+    			
+    		return randomCovers;
+    }
+    
     @RequestMapping("/getRemoteCovers")
     public ArrayList<Cover> 
     	getRemoteCovers(){
@@ -175,7 +201,11 @@ public class RestApiController {
 						String location = "";
 						String fileName = "";
 						short year = 0;
-						if (cover.getFileName() != null && !cover.getFileName().equals("")) {
+						if (cover.getFileName().contains("spotify")) {
+							fileName = cover.getFileName();
+							location = cover.getFileName();
+						}
+						else if (cover.getFileName() != null && !cover.getFileName().equals("")) {
 							fileName = cover.getFileName();
 							location = remotePath + cover.getFileName();
 						}
