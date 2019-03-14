@@ -201,7 +201,7 @@ public class RestApiController {
 						String location = "";
 						String fileName = "";
 						short year = 0;
-						if (cover.getFileName().contains("spotify")) {
+						if (cover.getFileName().startsWith("http")) {
 							fileName = cover.getFileName();
 							location = cover.getFileName();
 						}
