@@ -231,7 +231,12 @@ public class RestApiController {
 				}
 				else {										// INSERT CASE
 					Cover ncover = new Cover(cover.getFileName(), cover.getName(), cover.getAuthor());
-					ncover.setLocation(remotePath + cover.getFileName());
+					if (cover.getFileName().startsWith("http")) {
+						ncover.setLocation(cover.getFileName());
+					}
+					else {
+						ncover.setLocation(remotePath + cover.getFileName());
+					}
 					ncover.setType("remote");
 					ncover.setYear(cover.getYear());
 					ncover.setUsername(cover.getUsername());
