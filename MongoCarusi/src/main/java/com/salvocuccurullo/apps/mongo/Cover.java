@@ -20,6 +20,7 @@ public class Cover {
 	private String created;
 	private String username;
 	private boolean visibleToAll = true;
+	private String spotifyUrl;
 
 	private Date create_ts;
 	private Date update_ts;
@@ -147,5 +148,13 @@ public class Cover {
 
 	public void setVisibleToAll(boolean visibleToAll) {
 		this.visibleToAll = visibleToAll;
+	}
+
+	public String getSpotifyUrl() {
+		return spotifyUrl;
+	}
+
+	public void setSpotifyUrl(String spotifyUrl) {
+		this.spotifyUrl = spotifyUrl;
 	}
 }

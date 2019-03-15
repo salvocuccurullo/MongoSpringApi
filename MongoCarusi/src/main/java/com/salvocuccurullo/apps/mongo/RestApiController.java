@@ -201,13 +201,16 @@ public class RestApiController {
 						String location = "";
 						String fileName = "";
 						short year = 0;
-						if (cover.getFileName().startsWith("http")) {
-							fileName = cover.getFileName();
-							location = cover.getFileName();
-						}
-						else if (cover.getFileName() != null && !cover.getFileName().equals("")) {
-							fileName = cover.getFileName();
-							location = remotePath + cover.getFileName();
+						
+						if (cover.getFileName() != null && !cover.getFileName().equals("")) {
+							if (cover.getFileName().startsWith("http")) {
+								fileName = cover.getFileName();
+								location = cover.getFileName();
+							}
+							else {
+								fileName = cover.getFileName();
+								location = remotePath + cover.getFileName();
+							}
 						}
 						else {
 							fileName = e_cover.getFileName();
