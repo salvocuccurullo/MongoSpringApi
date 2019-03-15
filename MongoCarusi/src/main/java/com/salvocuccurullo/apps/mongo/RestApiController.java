@@ -243,6 +243,7 @@ public class RestApiController {
 					ncover.setType("remote");
 					ncover.setYear(cover.getYear());
 					ncover.setUsername(cover.getUsername());
+					ncover.setSpotifyUrl(cover.getSpotifyUrl());
 					repository.save(ncover);
 				}
 			}
