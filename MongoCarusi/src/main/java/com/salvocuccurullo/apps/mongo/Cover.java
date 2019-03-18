@@ -20,8 +20,8 @@ public class Cover {
 	private String created;
 	private String username;
 	private boolean visibleToAll = true;
-	private String spotifyUrl;
-
+	private String spotifyUrl = "";
+	
 	private Date create_ts;
 	private Date update_ts;
 	
