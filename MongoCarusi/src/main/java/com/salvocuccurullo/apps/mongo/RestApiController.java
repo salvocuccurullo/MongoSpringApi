@@ -206,22 +206,21 @@ public class RestApiController {
 							if (cover.getFileName().startsWith("http")) {
 								fileName = cover.getFileName();
 								location = cover.getFileName();
-							}
-							else {
+							} else {
 								fileName = cover.getFileName();
 								location = remotePath + cover.getFileName();
 							}
-						}
-						else {
+						} else {
 							fileName = e_cover.getFileName();
 							location = e_cover.getLocation();
 						}
 						
-						if (cover.getYear() != 0)
+						if (cover.getYear() != 0) {
 							year = cover.getYear();
-						else
+						} else {
 							year = e_cover.getYear();
-
+						}
+						
 						e_cover.setName(cover.getName());
 						e_cover.setAuthor(cover.getAuthor());
 						e_cover.setFileName(fileName);
@@ -231,24 +230,7 @@ public class RestApiController {
 						e_cover.setUpdate_ts(new Date());
 						repository.save(e_cover);
 						message = "Document successfully updated on MongoDB.";
-<<<<<<< Updated upstream
-				}
-				else {										// INSERT CASE
-					Cover ncover = new Cover(cover.getFileName(), cover.getName(), cover.getAuthor());
-					if (cover.getFileName().startsWith("http")) {
-						ncover.setLocation(cover.getFileName());
-					}
-					else {
-						ncover.setLocation(remotePath + cover.getFileName());
-					}
-					ncover.setType("remote");
-					ncover.setYear(cover.getYear());
-					ncover.setUsername(cover.getUsername());
-					ncover.setSpotifyUrl(cover.getSpotifyUrl());
-					repository.save(ncover);
-=======
 				} else {										// INSERT CASE
-					
 					Cover existingCover = repository.findByNameAndAuthor(cover.getName(), cover.getAuthor());
 					if (existingCover != null) {
 		    			message = "A cover with same title and author already exists.";
@@ -257,8 +239,7 @@ public class RestApiController {
 						Cover ncover = new Cover(cover.getFileName(), cover.getName(), cover.getAuthor());
 						if (cover.getFileName().startsWith("http")) {
 							ncover.setLocation(cover.getFileName());
-						}
-						else {
+						} else {
 							ncover.setLocation(remotePath + cover.getFileName());
 						}
 						ncover.setType("remote");
@@ -267,7 +248,6 @@ public class RestApiController {
 						ncover.setSpotifyUrl(cover.getSpotifyUrl());
 						repository.save(ncover);
 					}
->>>>>>> Stashed changes
 				}
 			}
 			catch(Exception eee) {
