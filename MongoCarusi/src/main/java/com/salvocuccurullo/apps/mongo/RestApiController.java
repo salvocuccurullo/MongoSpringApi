@@ -34,8 +34,8 @@ public class RestApiController {
     	
     		ArrayList<Cover> covers = new ArrayList<Cover>();
     		
-			String message = "";
-			String result = "success";
+			//String message = "";
+			//String result = "success";
 			
     		if (coverName.equals("")) {
     			return covers;
@@ -58,8 +58,8 @@ public class RestApiController {
     	
     		ArrayList<Cover> covers = new ArrayList<Cover>();
     		
-			String message = "";
-			String result = "success";
+			//String message = "";
+			//String result = "success";
 
     		covers = (ArrayList<Cover>)repository.findAll();
     		
@@ -77,8 +77,8 @@ public class RestApiController {
     	
     		ArrayList<Cover> covers = new ArrayList<Cover>();
     		
-			String message = "";
-			String result = "success";
+			//String message = "";
+			//String result = "success";
     		
     		covers = (ArrayList<Cover>)repository.findByType("remote");
     		
@@ -99,8 +99,8 @@ public class RestApiController {
     	
     		ArrayList<Cover> covers = new ArrayList<Cover>();
     		
-			String message = "";
-			String result = "success";
+			//String message = "";
+			//String result = "success";
 			
 			logger.info("Get remote covers called.");
     		covers = (ArrayList<Cover>)repository.findByType("remote");
@@ -198,6 +198,7 @@ public class RestApiController {
 						e_cover.setUpdate_ts(new Date());
 						repository.save(e_cover);
 						message = "Document successfully updated on MongoDB.";
+<<<<<<< Updated upstream
 				}
 				else {										// INSERT CASE
 					Cover ncover = new Cover(cover.getFileName(), cover.getName(), cover.getAuthor());
@@ -206,12 +207,34 @@ public class RestApiController {
 					ncover.setYear(cover.getYear());
 					ncover.setUsername(cover.getUsername());
 					repository.save(ncover);
+=======
+				} else {										// INSERT CASE
+					
+					Cover existingCover = repository.findByNameAndAuthor(cover.getName(), cover.getAuthor());
+					if (existingCover != null) {
+		    			message = "A cover with same title and author already exists.";
+		    			result = "failure";						
+					} else {
+						Cover ncover = new Cover(cover.getFileName(), cover.getName(), cover.getAuthor());
+						if (cover.getFileName().startsWith("http")) {
+							ncover.setLocation(cover.getFileName());
+						}
+						else {
+							ncover.setLocation(remotePath + cover.getFileName());
+						}
+						ncover.setType("remote");
+						ncover.setYear(cover.getYear());
+						ncover.setUsername(cover.getUsername());
+						ncover.setSpotifyUrl(cover.getSpotifyUrl());
+						repository.save(ncover);
+					}
+>>>>>>> Stashed changes
 				}
 			}
 			catch(Exception eee) {
 				logger.error(eee.toString());
     			message = eee.toString();
-    			result = "failure";	
+    			result = "failure";
 			}
 		}
 		

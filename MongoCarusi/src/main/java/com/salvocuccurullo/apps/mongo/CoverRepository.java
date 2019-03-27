@@ -18,6 +18,14 @@ public interface CoverRepository extends MongoRepository<Cover, String> {
 
     @Query("{username : null}")
     public List<Cover> findByNullUserQuery();
-	
+
+    @Query("{ 'name': ?0, 'author': ?1}")
+    public Cover findByNameAndAuthor(String name, String author);
+    
+    /* Example
+    	@Query("{ 'campaignId': ?0, 'options.path': ?1}")
+    	public Dialog findByIdAndPath(String id, String path);
+    */
+    
 }
 

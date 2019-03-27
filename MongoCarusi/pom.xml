@@ -5,7 +5,11 @@
 
     <groupId>com.salvocuccurullo.apps.mongo</groupId>
     <artifactId>mongocarusi</artifactId>
+<<<<<<< Updated upstream
     <version>1.0.13</version>
+=======
+    <version>1.0.16</version>
+>>>>>>> Stashed changes
 
     <parent>
         <groupId>org.springframework.boot</groupId>
