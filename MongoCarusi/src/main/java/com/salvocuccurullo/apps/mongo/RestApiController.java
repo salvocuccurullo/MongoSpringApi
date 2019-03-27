@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -231,8 +232,8 @@ public class RestApiController {
 						repository.save(e_cover);
 						message = "Document successfully updated on MongoDB.";
 				} else {										// INSERT CASE
-					Cover existingCover = repository.findByNameAndAuthor(cover.getName(), cover.getAuthor());
-					if (existingCover != null) {
+					List<Cover> existingCovers = repository.findByNameAndAuthor(cover.getName(), cover.getAuthor());
+					if (existingCovers.size() > 0) {
 		    			message = "A cover with same title and author already exists.";
 		    			result = "failure";						
 					} else {

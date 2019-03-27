@@ -20,7 +20,7 @@ public interface CoverRepository extends MongoRepository<Cover, String> {
     public List<Cover> findByNullUserQuery();
 
     @Query("{ 'name': ?0, 'author': ?1}")
-    public Cover findByNameAndAuthor(String name, String author);
+    public List<Cover> findByNameAndAuthor(String name, String author);
     
     /* Example
     	@Query("{ 'campaignId': ?0, 'options.path': ?1}")
