@@ -1,6 +1,7 @@
 package com.salvocuccurullo.apps.mongo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -12,6 +13,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,7 +72,8 @@ public class RestApiController {
     		}
 
     		logger.info("Get covers by search string called. Query param: " + search);
-    		covers = (ArrayList<Cover>)repository.findBySearch(search);
+    		Sort sort = new Sort(Direction.ASC, Arrays.asList("author", "year", "name"));
+    		covers = (ArrayList<Cover>)repository.findBySearch(search, sort);
     		logger.info("Get covers by name result:" + new Integer(covers.size()).toString() + " covers found.");
 
     		for (Cover cover: covers) {

@@ -2,6 +2,7 @@ package com.salvocuccurullo.apps.mongo;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
@@ -26,7 +27,7 @@ public interface CoverRepository extends MongoRepository<Cover, String> {
     		+ "{'name'   : { $regex: ?0, $options: 'i' }}, "
     		+ "{'author' : { $regex: ?0, $options: 'i' }}"
     		+ "]  }")
-    public List<Cover> findBySearch(String search);
+    public List<Cover> findBySearch(String search, Sort sort);
     
     /* Example
     	@Query("{ 'campaignId': ?0, 'options.path': ?1}")
