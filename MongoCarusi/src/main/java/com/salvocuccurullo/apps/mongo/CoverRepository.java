@@ -23,8 +23,8 @@ public interface CoverRepository extends MongoRepository<Cover, String> {
     public List<Cover> findByNameAndAuthor(String name, String author);
 
     @Query("{ $or: [ "
-    		+ "{'name'   : { $regex: .*?0.* }}, "
-    		+ "{'author' : { $regex: .*?0.* }}"
+    		+ "{'name'   : { $regex: '.*?0.*', $options: 'i' }}, "
+    		+ "{'author' : { $regex: '.*?0.*', $options: 'i' }}"
     		+ "]  }")
     public List<Cover> findBySearch(String search);
     
