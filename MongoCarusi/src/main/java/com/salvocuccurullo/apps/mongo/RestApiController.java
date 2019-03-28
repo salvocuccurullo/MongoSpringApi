@@ -54,6 +54,30 @@ public class RestApiController {
     		
     		return covers;
     }
+    
+    @RequestMapping("/searchCovers")
+    public ArrayList<Cover> 
+    	searchCovers( @RequestParam(value="search", defaultValue="") String search){
+    	
+    		ArrayList<Cover> covers = new ArrayList<Cover>();
+    		
+			//String message = "";
+			//String result = "success";
+			
+    		if (search.equals("")) {
+    			return covers;
+    		}
+
+    		logger.info("Get covers by search string called. Query param: " + search);
+    		covers = (ArrayList<Cover>)repository.findBySearch(search);
+    		logger.info("Get covers by name result:" + new Integer(covers.size()).toString() + " covers found.");
+
+    		for (Cover cover: covers) {
+    			logger.debug(cover.getFileName() + " -> " + cover.getName());
+    		}
+    		
+    		return covers;
+    }
 
     @RequestMapping("/getAllCovers")
     public ArrayList<Cover> 

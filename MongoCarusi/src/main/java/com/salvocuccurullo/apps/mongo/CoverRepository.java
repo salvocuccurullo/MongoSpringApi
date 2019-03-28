@@ -21,6 +21,12 @@ public interface CoverRepository extends MongoRepository<Cover, String> {
 
     @Query("{ 'name': ?0, 'author': ?1}")
     public List<Cover> findByNameAndAuthor(String name, String author);
+
+    @Query("{ $or: [ "
+    		+ "{'name'   : { $regex: .*?0.* }}, "
+    		+ "{'author' : { $regex: .*?0.* }}"
+    		+ "]  }")
+    public List<Cover> findBySearch(String search);
     
     /* Example
     	@Query("{ 'campaignId': ?0, 'options.path': ?1}")
