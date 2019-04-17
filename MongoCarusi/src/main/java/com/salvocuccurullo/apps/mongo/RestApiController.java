@@ -71,9 +71,16 @@ public class RestApiController {
     			return covers;
     		}
 
+    		int year = 0;
+    		try {
+    			year = Integer.parseInt(search);
+    		} catch(NumberFormatException nfe) {
+    			logger.debug("search is not a number");
+    		}
+    		
     		logger.info("Get covers by search string called. Query param: " + search);
     		Sort sort = new Sort(Direction.ASC, Arrays.asList("author", "year", "name"));
-    		covers = (ArrayList<Cover>)repository.findBySearch(search, sort);
+    		covers = (ArrayList<Cover>)repository.findBySearch(search, year, sort);
     		logger.info("Get covers by name result:" + new Integer(covers.size()).toString() + " covers found.");
 
     		for (Cover cover: covers) {
