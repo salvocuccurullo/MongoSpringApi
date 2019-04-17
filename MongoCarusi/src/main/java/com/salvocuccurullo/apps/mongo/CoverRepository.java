@@ -25,7 +25,8 @@ public interface CoverRepository extends MongoRepository<Cover, String> {
 
     @Query("{ $or: [ "
     		+ "{'name'   : { $regex: ?0, $options: 'i' }}, "
-    		+ "{'author' : { $regex: ?0, $options: 'i' }}"
+    		+ "{'author' : { $regex: ?0, $options: 'i' }}, "
+    		+ "{'year' : { $regex: ?0, $options: 'i' }}    "
     		+ "]  }")
     public List<Cover> findBySearch(String search, Sort sort);
     
