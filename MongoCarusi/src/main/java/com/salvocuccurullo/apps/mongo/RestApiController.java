@@ -117,6 +117,9 @@ public class RestApiController {
     		Sort sort = new Sort(Direction.ASC, Arrays.asList("update_ts"));
     		covers = (ArrayList<Cover>)repository.getLatest(limit, sort);
     		
+    		// to be fixed - limit does not work within the query
+    		covers = (ArrayList<Cover>)covers.subList(0, limit-1);
+    		
     		return covers;
     }     
 
