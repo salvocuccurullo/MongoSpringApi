@@ -107,7 +107,18 @@ public class RestApiController {
     		}
     		
     		return covers;
-    }    
+    }
+    
+    @RequestMapping("/getLatest")
+    public ArrayList<Cover> 
+    	getLatest(@RequestParam(value="limit", defaultValue="15") int limit){
+    	
+    		ArrayList<Cover> covers = new ArrayList<Cover>();
+    		Sort sort = new Sort(Direction.ASC, Arrays.asList("update_ts"));
+    		covers = (ArrayList<Cover>)repository.getLatest(limit, sort);
+    		
+    		return covers;
+    }     
 
     @RequestMapping("/getRandomCover")
     public Cover 

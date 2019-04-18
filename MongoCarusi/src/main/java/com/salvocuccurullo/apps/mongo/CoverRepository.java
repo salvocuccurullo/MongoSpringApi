@@ -23,6 +23,9 @@ public interface CoverRepository extends MongoRepository<Cover, String> {
     @Query("{ 'name': ?0, 'author': ?1}")
     public List<Cover> findByNameAndAuthor(String name, String author);
 
+    @Query("{}.limit(?0)")
+    public List<Cover> getLatest(int limit, Sort sort);    
+    
     @Query("{ $or: [ "
     		+ "{'name'   : { $regex: ?0, $options: 'i' }}, "
     		+ "{'author' : { $regex: ?0, $options: 'i' }}, "
