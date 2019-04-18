@@ -118,8 +118,8 @@ public class RestApiController {
     		covers = (ArrayList<Cover>)repository.getLatest(limit, sort);
     		
     		// to be fixed - limit does not work within the query
-    		covers = (ArrayList<Cover>)covers.subList(0, limit-1);
-    		
+    		covers = new ArrayList<Cover>(covers.subList(0, limit-1));
+
     		return covers;
     }     
 
