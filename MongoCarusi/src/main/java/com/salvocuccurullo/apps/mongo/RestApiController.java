@@ -114,7 +114,7 @@ public class RestApiController {
     	getLatest(@RequestParam(value="limit", defaultValue="15") int limit){
     	
     		ArrayList<Cover> covers = new ArrayList<Cover>();
-    		Sort sort = new Sort(Direction.ASC, Arrays.asList("update_ts"));
+    		Sort sort = new Sort(Direction.DESC, Arrays.asList("update_ts"));
     		covers = (ArrayList<Cover>)repository.getLatest(limit, sort);
     		
     		// to be fixed - limit does not work within the query
