@@ -12,6 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.info.BuildProperties;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -33,7 +34,37 @@ public class RestApiController {
 	private Environment env;
 	
 	private static Logger logger = LogManager.getLogger(RestApiController.class);
+	
+	@Autowired
+	BuildProperties buildProperties;
 
+    @RequestMapping("/getVersion")
+    public JsonObject 
+		getVersion(){
+
+		logger.info("Get stats called.");
+		
+		String message = "";
+		String result = "success";
+	
+		JsonObject res = new JsonObject(message, result);
+		HashMap<String,Object> payload = new HashMap<String,Object>();
+		
+		payload.put("version", buildProperties.getVersion());
+		payload.put("name", buildProperties.getName());
+		payload.put("build_time", buildProperties.getTime().toString());
+		payload.put("artifact", buildProperties.getArtifact());
+		payload.put("spring_version", buildProperties.get("spring-version"));
+		payload.put("encoding", buildProperties.get("encoding"));
+		payload.put("mongo_db_driver", buildProperties.get("mongodb-driver"));
+		
+		res.setMessage(message);
+		res.setResult(result);
+		res.setPayload(payload);
+		
+		return res;
+    }	
+	
     @RequestMapping("/getCovers")
     public ArrayList<Cover> 
     	getCovers( @RequestParam(value="coverName", defaultValue="") String coverName){
