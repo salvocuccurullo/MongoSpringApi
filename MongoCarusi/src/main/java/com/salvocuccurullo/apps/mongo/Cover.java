@@ -21,6 +21,7 @@ public class Cover {
 	private String username;
 	private boolean visibleToAll = true;
 	private String spotifyUrl = "";
+	private String spotifyAlbumUrl = "";
 	
 	private Date create_ts;
 	private Date update_ts;
@@ -156,5 +157,13 @@ public class Cover {
 
 	public void setSpotifyUrl(String spotifyUrl) {
 		this.spotifyUrl = spotifyUrl;
+	}
+
+	public String getSpotifyAlbumUrl() {
+		return spotifyAlbumUrl;
+	}
+
+	public void setSpotifyAlbumUrl(String spotifyAlbumUrl) {
+		this.spotifyAlbumUrl = spotifyAlbumUrl;
 	}
 }
