@@ -163,7 +163,7 @@ public class RestApiController {
 			//String message = "";
 			//String result = "success";
     		
-    		covers = (ArrayList<Cover>)repository.findByType("remote");
+    		covers = (ArrayList<Cover>)repository.findAll();
     		
     		if (covers.size()==0)
     			return null;
