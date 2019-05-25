@@ -327,6 +327,7 @@ public class RestApiController {
 						ncover.setYear(cover.getYear());
 						ncover.setUsername(cover.getUsername());
 						ncover.setSpotifyUrl(cover.getSpotifyUrl());
+						ncover.setSpotifyAlbumUrl(cover.getSpotifyAlbumUrl());
 						repository.save(ncover);
 					}
 				}
