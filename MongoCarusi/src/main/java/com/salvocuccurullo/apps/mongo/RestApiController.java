@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.salvocuccurullo.apps.mongo.models.Cover;
+import com.salvocuccurullo.apps.mongo.models.JsonObject;
+
 @RestController
 public class RestApiController {
 
@@ -309,6 +312,9 @@ public class RestApiController {
 						e_cover.setUsername(cover.getUsername());
 						e_cover.setYear(year);
 						e_cover.setUpdate_ts(new Date());
+						if (cover.getReviews().size() > 0) {
+							
+						}						
 						repository.save(e_cover);
 						message = "Document successfully updated on MongoDB.";
 				} else {										// INSERT CASE
@@ -328,6 +334,8 @@ public class RestApiController {
 						ncover.setUsername(cover.getUsername());
 						ncover.setSpotifyUrl(cover.getSpotifyUrl());
 						ncover.setSpotifyAlbumUrl(cover.getSpotifyAlbumUrl());
+						ncover.setReviews(cover.getReviews());
+
 						repository.save(ncover);
 					}
 				}

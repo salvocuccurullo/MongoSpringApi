@@ -1,4 +1,4 @@
-package com.salvocuccurullo.apps.mongo;
+package com.salvocuccurullo.apps.mongo.models;
 
 import java.util.HashMap;
 

@@ -1,6 +1,7 @@
-package com.salvocuccurullo.apps.mongo;
+package com.salvocuccurullo.apps.mongo.models;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -22,6 +23,7 @@ public class Cover {
 	private boolean visibleToAll = true;
 	private String spotifyUrl = "";
 	private String spotifyAlbumUrl = "";
+	private ArrayList<Review> reviews;
 	
 	private Date create_ts;
 	private Date update_ts;
@@ -165,5 +167,13 @@ public class Cover {
 
 	public void setSpotifyAlbumUrl(String spotifyAlbumUrl) {
 		this.spotifyAlbumUrl = spotifyAlbumUrl;
+	}
+
+	public ArrayList<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(ArrayList<Review> reviews) {
+		this.reviews = reviews;
 	}
 }
