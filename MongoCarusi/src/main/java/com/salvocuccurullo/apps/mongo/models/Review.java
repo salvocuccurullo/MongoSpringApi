@@ -1,10 +1,9 @@
 package com.salvocuccurullo.apps.mongo.models;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.io.Serializable;
 import java.util.Date;
 
-public class Review {
+public class Review implements Serializable{
 
 	private String username;
 	private String review;
