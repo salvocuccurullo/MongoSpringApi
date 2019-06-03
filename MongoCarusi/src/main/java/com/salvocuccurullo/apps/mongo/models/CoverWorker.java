@@ -1,15 +1,10 @@
 package com.salvocuccurullo.apps.mongo.models;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.Id;
 
-public class Cover {
+public class CoverWorker {
 
 	@Id
 	private String id;
@@ -24,54 +19,20 @@ public class Cover {
 	private String type = "local";
 	private short year;
 	private String location;
-	private String created;
 	private String username;
 	private boolean visibleToAll = true;
 	private String spotifyUrl = "";
 	private String spotifyAlbumUrl = "";
-	private ArrayList<Review> reviews;
+	private String review;
 	
-	private Date create_ts;
-	private Date update_ts;
 	
-	public Cover() {
-		this.created = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
-	}
-	
-	public Cover(String fileName, String name, String author) {
+	public CoverWorker(String fileName, String name, String author) {
 		this.fileName = fileName;
 		this.name = name;
 		this.author = author;
-		this.create_ts = new Date();
-		this.update_ts = new Date();
-		this.created = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
 	}
 	
-	
-	public String getCreated() {
-		return created;
-	}
-
-	public void setCreated(String created) {
-		this.created = created;
-	}
-
-	public Date getCreate_ts() {
-		return create_ts;
-	}
-
-	public void setCreate_ts(Date create_ts) {
-		this.create_ts = create_ts;
-	}
-
-	public Date getUpdate_ts() {
-		return update_ts;
-	}
-
-	public void setUpdate_ts(Date update_ts) {
-		this.update_ts = update_ts;
-	}
-	
+		
     @Override
     public String toString() {
         return String.format(
@@ -175,11 +136,12 @@ public class Cover {
 		this.spotifyAlbumUrl = spotifyAlbumUrl;
 	}
 
-	public ArrayList<Review> getReviews() {
-		return reviews;
-	}
+    public String getReview() {
+        return review;
+    }
 
-	public void setReviews(ArrayList<Review> reviews) {
-		this.reviews = reviews;
-	}
+
+    public void setReview(String review) {
+        this.review = review;
+    }
 }
