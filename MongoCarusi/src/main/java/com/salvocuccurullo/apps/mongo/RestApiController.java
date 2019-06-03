@@ -28,6 +28,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.salvocuccurullo.apps.mongo.models.Cover;
 import com.salvocuccurullo.apps.mongo.models.CoverWorker;
 import com.salvocuccurullo.apps.mongo.models.JsonObject;
+import com.salvocuccurullo.apps.mongo.models.Review;
 
 @RestController
 public class RestApiController {
@@ -360,6 +361,16 @@ public class RestApiController {
             e_cover.setAuthor(coverWorker.getAuthor());
             e_cover.setUsername(coverWorker.getUsername());
             e_cover.setUpdate_ts(new Date());
+            if (!coverWorker.getReview().contentEquals("")) {
+                Review review = new Review();
+                review.setUsername(coverWorker.getUsername());
+                review.setReview(coverWorker.getReview());
+                HashMap<String, Review> reviews = e_cover.getReviews();
+                if (reviews == null) {
+                    reviews = new HashMap<String, Review>();
+                }
+                reviews.put(coverWorker.getUsername(), review);
+            }            
             repository.save(e_cover);
 
             return "Document successfully updated on MongoDB.";
@@ -384,6 +395,14 @@ public class RestApiController {
         ncover.setUsername(coverWorker.getUsername());
         ncover.setSpotifyUrl(coverWorker.getSpotifyUrl());
         ncover.setSpotifyAlbumUrl(coverWorker.getSpotifyAlbumUrl());
+        if (!coverWorker.getReview().contentEquals("")) {
+            Review review = new Review();
+            review.setUsername(coverWorker.getUsername());
+            review.setReview(coverWorker.getReview());
+            HashMap<String, Review> reviews = new HashMap<String, Review>();
+            reviews.put(coverWorker.getUsername(), review);
+            ncover.setReviews(reviews);
+        }
         repository.save(ncover);        
         
         return "";

@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.validation.constraints.NotNull;
 
@@ -29,7 +30,7 @@ public class Cover {
 	private boolean visibleToAll = true;
 	private String spotifyUrl = "";
 	private String spotifyAlbumUrl = "";
-	private ArrayList<Review> reviews;
+	private HashMap<String, Review> reviews;
 	
 	private Date create_ts;
 	private Date update_ts;
@@ -175,11 +176,13 @@ public class Cover {
 		this.spotifyAlbumUrl = spotifyAlbumUrl;
 	}
 
-	public ArrayList<Review> getReviews() {
-		return reviews;
-	}
+    public HashMap<String, Review> getReviews() {
+        return reviews;
+    }
 
-	public void setReviews(ArrayList<Review> reviews) {
-		this.reviews = reviews;
-	}
+    public void setReviews(HashMap<String, Review> reviews) {
+        this.reviews = reviews;
+    }
+
+
 }
