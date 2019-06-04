@@ -7,6 +7,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
+import com.salvocuccurullo.apps.mongo.models.Cover;
+
 public interface CoverRepository extends MongoRepository<Cover, String> {
 
 	public Cover findByFileName(String fileName);

@@ -1,8 +1,12 @@
-package com.salvocuccurullo.apps.mongo;
+package com.salvocuccurullo.apps.mongo.models;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.Id;
 
@@ -11,10 +15,14 @@ public class Cover {
 	@Id
 	private String id;
 	
-	private String fileName;
-	private String name;
+    @NotNull
+    private String name;	
+    
+    @NotNull
+    private String author;	
+	
+    private String fileName;
 	private String type = "local";
-	private String author;
 	private short year;
 	private String location;
 	private String created;
@@ -22,6 +30,7 @@ public class Cover {
 	private boolean visibleToAll = true;
 	private String spotifyUrl = "";
 	private String spotifyAlbumUrl = "";
+	private HashMap<String, Review> reviews;
 	
 	private Date create_ts;
 	private Date update_ts;
@@ -166,4 +175,14 @@ public class Cover {
 	public void setSpotifyAlbumUrl(String spotifyAlbumUrl) {
 		this.spotifyAlbumUrl = spotifyAlbumUrl;
 	}
+
+    public HashMap<String, Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(HashMap<String, Review> reviews) {
+        this.reviews = reviews;
+    }
+
+
 }
