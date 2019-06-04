@@ -457,7 +457,8 @@ public class RestApiController {
                     message = updateCover(e_cover, coverWorker);
                 } else {
                     message = insertCover(coverWorker);
-                }    
+                }
+                json = new JsonObject(message, result);
             }
 
         }
