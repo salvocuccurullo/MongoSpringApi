@@ -362,7 +362,7 @@ public class RestApiController {
             e_cover.setUsername(coverWorker.getUsername());
             e_cover.setUpdate_ts(new Date());
             
-            if (!coverWorker.getReview().contentEquals("")) {
+            if (coverWorker.getReview() != null && !coverWorker.getReview().contentEquals("")) {
 
                 HashMap<String, Review> reviews = e_cover.getReviews();
                 Review e_review = null;
