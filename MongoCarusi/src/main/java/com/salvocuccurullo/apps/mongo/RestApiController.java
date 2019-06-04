@@ -361,18 +361,30 @@ public class RestApiController {
             e_cover.setAuthor(coverWorker.getAuthor());
             e_cover.setUsername(coverWorker.getUsername());
             e_cover.setUpdate_ts(new Date());
+            
             if (!coverWorker.getReview().contentEquals("")) {
-                Review review = new Review();
-                review.setUsername(coverWorker.getUsername());
-                review.setReview(coverWorker.getReview());
-                review.setVote(coverWorker.getVote());
+
                 HashMap<String, Review> reviews = e_cover.getReviews();
+                Review e_review = null;
+                
                 if (reviews == null) {
                     reviews = new HashMap<String, Review>();
+                } else {
+                     e_review = reviews.get(coverWorker.getUsername());
+                    if (e_review == null) {
+                        e_review = new Review();
+                    } else {
+                        e_review.setUpdated(new Date());
+                    }
                 }
-                reviews.put(coverWorker.getUsername(), review);
-                review.setUpdated(new Date());
-            }            
+                
+                e_review.setUsername(coverWorker.getUsername());
+                e_review.setReview(coverWorker.getReview());
+                e_review.setVote(coverWorker.getVote());
+
+                reviews.put(coverWorker.getUsername(), e_review);
+            }
+            
             repository.save(e_cover);
 
             return "Document successfully updated on MongoDB.";
