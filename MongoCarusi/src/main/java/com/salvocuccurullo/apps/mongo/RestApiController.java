@@ -384,6 +384,7 @@ public class RestApiController {
                 e_review.setVote(coverWorker.getVote());
 
                 reviews.put(coverWorker.getUsername(), e_review);
+                e_cover.setReviews(reviews);
             }
             
             repository.save(e_cover);
