@@ -7,8 +7,10 @@ public class Review implements Serializable{
 
 	private String username;
 	private String review;
+	private float vote;
 	private Date created;
 	private Date updated;
+	
     public String getUsername() {
         return username;
     }
@@ -32,6 +34,12 @@ public class Review implements Serializable{
     }
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+    public float getVote() {
+        return vote;
+    }
+    public void setVote(float vote) {
+        this.vote = vote;
     }
 	
 	

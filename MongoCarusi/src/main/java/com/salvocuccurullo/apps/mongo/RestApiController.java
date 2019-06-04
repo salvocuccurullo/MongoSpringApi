@@ -365,6 +365,7 @@ public class RestApiController {
                 Review review = new Review();
                 review.setUsername(coverWorker.getUsername());
                 review.setReview(coverWorker.getReview());
+                review.setVote(coverWorker.getVote());
                 HashMap<String, Review> reviews = e_cover.getReviews();
                 if (reviews == null) {
                     reviews = new HashMap<String, Review>();
@@ -399,6 +400,7 @@ public class RestApiController {
             Review review = new Review();
             review.setUsername(coverWorker.getUsername());
             review.setReview(coverWorker.getReview());
+            review.setVote(coverWorker.getVote());
             HashMap<String, Review> reviews = new HashMap<String, Review>();
             reviews.put(coverWorker.getUsername(), review);
             ncover.setReviews(reviews);
