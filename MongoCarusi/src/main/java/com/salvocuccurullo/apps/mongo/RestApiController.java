@@ -420,7 +420,7 @@ public class RestApiController {
         }
         repository.save(ncover);        
         
-        return "";
+        return "Document successfully created on MongoDB.";
     }
     
     @RequestMapping(value = "/createCover3", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -428,7 +428,7 @@ public class RestApiController {
 
         logger.info("Create/Update Cover called");
 
-        String message = "Document successfully created on MongoDB.";
+        String message = "";
         String result = "success";
         JsonObject json = new JsonObject(message, result);
 
@@ -441,7 +441,7 @@ public class RestApiController {
                 result = "failure";
             } else {
                 
-                if (coverWorker.getId() == "") {  // DUPLICATE CHECK IN CASE OF NEW COVER
+                if (coverWorker.getId().contentEquals("0")) {  // DUPLICATE CHECK IN CASE OF NEW COVER
                     List<Cover> existingCovers = repository.findByNameAndAuthor(coverWorker.getName(), coverWorker.getAuthor());
                     if (existingCovers.size() > 0) {
                         message = "A cover with same title and author already exists.";
@@ -458,16 +458,18 @@ public class RestApiController {
                 } else {
                     message = insertCover(coverWorker);
                 }
-                json = new JsonObject(message, result);
+                
             }
 
         }
         catch (Exception e) {
             logger.error(e.toString());
             message = e.toString();
+            e.printStackTrace();
             result = "failure";
         }
-
+        
+        json = new JsonObject(message, result);
         return json;
     }
 }
