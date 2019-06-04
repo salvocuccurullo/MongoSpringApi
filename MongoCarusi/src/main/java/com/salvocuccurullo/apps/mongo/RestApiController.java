@@ -369,6 +369,7 @@ public class RestApiController {
                 
                 if (reviews == null) {
                     reviews = new HashMap<String, Review>();
+                    e_review = new Review();
                 } else {
                      e_review = reviews.get(coverWorker.getUsername());
                     if (e_review == null) {
