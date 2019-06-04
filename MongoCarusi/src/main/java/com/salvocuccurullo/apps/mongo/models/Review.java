@@ -1,6 +1,8 @@
 package com.salvocuccurullo.apps.mongo.models;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Review implements Serializable{
@@ -11,6 +13,11 @@ public class Review implements Serializable{
 	private Date created;
 	private Date updated;
 	
+    public Review() {
+        super();
+        this.created = new Date();
+        this.updated = new Date();
+    }
     public String getUsername() {
         return username;
     }

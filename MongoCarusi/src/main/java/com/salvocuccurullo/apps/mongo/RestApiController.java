@@ -371,6 +371,7 @@ public class RestApiController {
                     reviews = new HashMap<String, Review>();
                 }
                 reviews.put(coverWorker.getUsername(), review);
+                review.setUpdated(new Date());
             }            
             repository.save(e_cover);
 
