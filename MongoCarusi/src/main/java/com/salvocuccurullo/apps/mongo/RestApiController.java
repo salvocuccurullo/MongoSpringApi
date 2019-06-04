@@ -409,7 +409,7 @@ public class RestApiController {
         ncover.setUsername(coverWorker.getUsername());
         ncover.setSpotifyUrl(coverWorker.getSpotifyUrl());
         ncover.setSpotifyAlbumUrl(coverWorker.getSpotifyAlbumUrl());
-        if (!coverWorker.getReview().contentEquals("")) {
+        if (coverWorker.getReview() != null && !coverWorker.getReview().contentEquals("")) {
             Review review = new Review();
             review.setUsername(coverWorker.getUsername());
             review.setReview(coverWorker.getReview());
