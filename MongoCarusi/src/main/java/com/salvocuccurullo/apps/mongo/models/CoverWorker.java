@@ -23,7 +23,7 @@ public class CoverWorker {
 	private boolean visibleToAll = true;
 	private String spotifyUrl = "";
 	private String spotifyAlbumUrl = "";
-	private String review;
+	private String review = "";
 	private float vote;
 	
 	
@@ -155,4 +155,5 @@ public class CoverWorker {
     public void setVote(float vote) {
         this.vote = vote;
     }
+    
 }

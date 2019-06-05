@@ -362,7 +362,7 @@ public class RestApiController {
             e_cover.setUsername(coverWorker.getUsername());
             e_cover.setUpdate_ts(new Date());
             
-            if (coverWorker.getReview() != null && !coverWorker.getReview().contentEquals("")) {
+            if (coverWorker.getVote() != 0) {
 
                 HashMap<String, Review> reviews = e_cover.getReviews();
                 Review e_review = null;
@@ -411,7 +411,7 @@ public class RestApiController {
         ncover.setUsername(coverWorker.getUsername());
         ncover.setSpotifyUrl(coverWorker.getSpotifyUrl());
         ncover.setSpotifyAlbumUrl(coverWorker.getSpotifyAlbumUrl());
-        if (coverWorker.getReview() != null && !coverWorker.getReview().contentEquals("")) {
+        if (coverWorker.getVote() != 0) {
             Review review = new Review();
             review.setUsername(coverWorker.getUsername());
             review.setReview(coverWorker.getReview());
