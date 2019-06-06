@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.salvocuccurullo.apps.mongo.models.Cover;
 import com.salvocuccurullo.apps.mongo.models.CoverWorker;
 import com.salvocuccurullo.apps.mongo.models.JsonObject;
@@ -359,7 +358,7 @@ public class RestApiController {
     
             e_cover.setName(coverWorker.getName());
             e_cover.setAuthor(coverWorker.getAuthor());
-            e_cover.setUsername(coverWorker.getUsername());
+            //e_cover.setUsername(coverWorker.getUsername());
             e_cover.setUpdate_ts(new Date());
             
             if (coverWorker.getVote() != 0) {
