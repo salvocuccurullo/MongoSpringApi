@@ -93,7 +93,10 @@ public class RestApiController {
     }
 
     @RequestMapping("/searchCovers")
-    public ArrayList<Cover> searchCovers(@RequestParam(value = "search", defaultValue = "") String search) {
+    public ArrayList<Cover> searchCovers(
+            @RequestParam(value = "search", defaultValue = "") String search,
+            @RequestParam(value = "limit", defaultValue = "15") int limit
+    ) {
 
         ArrayList<Cover> covers = new ArrayList<Cover>();
 
@@ -116,9 +119,14 @@ public class RestApiController {
         covers = (ArrayList<Cover>) repository.findBySearch(search, year, sort);
         logger.info("Get covers by name result:" + new Integer(covers.size()).toString() + " covers found.");
 
-        for (Cover cover : covers) {
-            logger.debug(cover.getFileName() + " -> " + cover.getName());
+        if (logger.isDebugEnabled()) {
+            for (Cover cover : covers) {
+                logger.debug(cover.getFileName() + " -> " + cover.getName());
+            }
         }
+
+        // to be fixed - limit does not work within the query
+        covers = new ArrayList<Cover>(covers.subList(0, limit));
 
         return covers;
     }
