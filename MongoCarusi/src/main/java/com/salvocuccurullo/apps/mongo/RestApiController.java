@@ -133,6 +133,60 @@ public class RestApiController {
         return covers;
     }
 
+    @RequestMapping("/searchCoversNg")
+    public JsonObject searchCoversNg(
+            @RequestParam(value = "search", defaultValue = "") String search,
+            @RequestParam(value = "limit", defaultValue = "15") int limit
+    ) {
+
+        String message = "";
+        String result = "success";
+
+        JsonObject jsonOut = new JsonObject(message, result);
+        ArrayList<Cover> covers = new ArrayList<Cover>();
+        HashMap<String, Object> payload = new HashMap<String, Object>();
+
+        try {
+            payload.put("covers", covers);
+            jsonOut.setPayload(payload);
+
+            if (search.equals("")) {
+                return jsonOut;
+            }
+
+            int year = 0;
+            try {
+                year = Integer.parseInt(search);
+            } catch (NumberFormatException nfe) {
+                logger.debug("search is not a number");
+            }
+
+            logger.info("Get covers by search string called. Query param: " + search);
+            Sort sort = new Sort(Direction.ASC, Arrays.asList("author", "year", "name"));
+            covers = (ArrayList<Cover>) repository.findBySearch(search, year, sort);
+            logger.info("Get covers by name result:" + new Integer(covers.size()).toString() + " covers found.");
+
+            if (logger.isDebugEnabled()) {
+                for (Cover cover : covers) {
+                    logger.debug(cover.getFileName() + " -> " + cover.getName());
+                }
+            }
+
+            // to be fixed - limit does not work within the query
+            if (covers.size() > limit) {
+                covers = new ArrayList<Cover>(covers.subList(0, limit));            
+            }
+        } catch(Exception e) {
+            jsonOut.setMessage(e.toString());
+            jsonOut.setResult("failure");
+        }
+
+        payload.put("covers", covers);
+        jsonOut.setPayload(payload);
+
+        return jsonOut;
+    }    
+    
     @RequestMapping("/getAllCovers")
     public ArrayList<Cover> getAllCovers() {
 
