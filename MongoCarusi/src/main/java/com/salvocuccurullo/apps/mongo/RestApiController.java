@@ -126,7 +126,9 @@ public class RestApiController {
         }
 
         // to be fixed - limit does not work within the query
-        covers = new ArrayList<Cover>(covers.subList(0, limit));
+        if (covers.size() > limit) {
+            covers = new ArrayList<Cover>(covers.subList(0, limit));
+        }
 
         return covers;
     }
@@ -157,7 +159,9 @@ public class RestApiController {
         covers = (ArrayList<Cover>) repository.getLatest(limit, sort);
 
         // to be fixed - limit does not work within the query
-        covers = new ArrayList<Cover>(covers.subList(0, limit));
+        if (covers.size() > limit) {
+            covers = new ArrayList<Cover>(covers.subList(0, limit));
+        }
 
         return covers;
     }
