@@ -141,6 +141,7 @@ public class RestApiController {
 
         String message = "";
         String result = "success";
+        boolean hasMore = false;
 
         JsonObject jsonOut = new JsonObject(message, result);
         ArrayList<Cover> covers = new ArrayList<Cover>();
@@ -174,7 +175,8 @@ public class RestApiController {
 
             // to be fixed - limit does not work within the query
             if (covers.size() > limit) {
-                covers = new ArrayList<Cover>(covers.subList(0, limit));            
+                covers = new ArrayList<Cover>(covers.subList(0, limit));    
+                hasMore = true;
             }
         } catch(Exception e) {
             jsonOut.setMessage(e.toString());
@@ -182,6 +184,7 @@ public class RestApiController {
         }
 
         payload.put("covers", covers);
+        payload.put("hasMore", hasMore);
         jsonOut.setPayload(payload);
 
         return jsonOut;
