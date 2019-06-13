@@ -178,9 +178,9 @@ public class RestApiController {
 
             // to be fixed - limit does not work within the query
             if (covers.size() > limit) {
+                leftOvers = covers.size() - limit;
                 covers = new ArrayList<Cover>(covers.subList(0, limit));    
                 hasMore = true;
-                leftOvers = covers.size() - limit;
             }
         } catch(Exception e) {
             jsonOut.setMessage(e.toString());
@@ -251,9 +251,9 @@ public class RestApiController {
     
             // to be fixed - limit does not work within the query
             if (covers.size() > limit) {
+                leftOvers = covers.size() - limit;
                 covers = new ArrayList<Cover>(covers.subList(0, limit));
                 hasMore = true;
-                leftOvers = covers.size() - limit;
             }
         } catch(Exception e) {
             jsonOut.setMessage(e.toString());
