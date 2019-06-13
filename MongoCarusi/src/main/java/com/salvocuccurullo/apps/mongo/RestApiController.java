@@ -142,6 +142,8 @@ public class RestApiController {
         String message = "";
         String result = "success";
         boolean hasMore = false;
+        int leftOvers = 0;
+        int total = 0;
 
         JsonObject jsonOut = new JsonObject(message, result);
         ArrayList<Cover> covers = new ArrayList<Cover>();
@@ -165,6 +167,7 @@ public class RestApiController {
             logger.info("Get covers by search string called. Query param: " + search);
             Sort sort = new Sort(Direction.ASC, Arrays.asList("author", "year", "name"));
             covers = (ArrayList<Cover>) repository.findBySearch(search, year, sort);
+            total = covers.size();
             logger.info("Get covers by name result:" + new Integer(covers.size()).toString() + " covers found.");
 
             if (logger.isDebugEnabled()) {
@@ -177,6 +180,7 @@ public class RestApiController {
             if (covers.size() > limit) {
                 covers = new ArrayList<Cover>(covers.subList(0, limit));    
                 hasMore = true;
+                leftOvers = covers.size() - limit;
             }
         } catch(Exception e) {
             jsonOut.setMessage(e.toString());
@@ -185,6 +189,8 @@ public class RestApiController {
 
         payload.put("covers", covers);
         payload.put("hasMore", hasMore);
+        payload.put("leftOvers", leftOvers);
+        payload.put("total", total);
         jsonOut.setPayload(payload);
 
         return jsonOut;
@@ -229,6 +235,8 @@ public class RestApiController {
         String message = "";
         String result = "success";
         boolean hasMore = false;
+        int leftOvers = 0;
+        int total = 0;
 
         JsonObject jsonOut = new JsonObject(message, result);
         ArrayList<Cover> covers = new ArrayList<Cover>();
@@ -239,11 +247,13 @@ public class RestApiController {
                 
             Sort sort = new Sort(Direction.DESC, Arrays.asList("update_ts"));
             covers = (ArrayList<Cover>) repository.getLatest(limit, sort);
+            total = covers.size();
     
             // to be fixed - limit does not work within the query
             if (covers.size() > limit) {
                 covers = new ArrayList<Cover>(covers.subList(0, limit));
                 hasMore = true;
+                leftOvers = covers.size() - limit;
             }
         } catch(Exception e) {
             jsonOut.setMessage(e.toString());
@@ -252,6 +262,8 @@ public class RestApiController {
 
         payload.put("covers", covers);
         payload.put("hasMore", hasMore);
+        payload.put("leftOvers", leftOvers);
+        payload.put("total", total);
         jsonOut.setPayload(payload);
 
         return jsonOut;
