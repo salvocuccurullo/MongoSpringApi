@@ -454,6 +454,11 @@ public class RestApiController {
     private String updateCover(Cover e_cover, CoverWorker coverWorker) {
         
         String remotePath = env.getProperty("remote.repo.baseurl", "");
+        
+        logger.info("Updating cover...");
+        logger.info(coverWorker.toString());
+        logger.info(coverWorker.getId());
+        logger.info(coverWorker.getVote());
 
         if (e_cover != null) {
     
