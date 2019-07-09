@@ -557,7 +557,7 @@ public class RestApiController {
                 result = "failure";
             } else {
                 
-                if (coverWorker.getId().contentEquals("0")) {  // DUPLICATE CHECK IN CASE OF NEW COVER
+                if (coverWorker.getId() != null && coverWorker.getId().contentEquals("0")) {  // DUPLICATE CHECK IN CASE OF NEW COVER
                     List<Cover> existingCovers = repository.findByNameAndAuthor(coverWorker.getName(), coverWorker.getAuthor());
                     if (existingCovers.size() > 0) {
                         message = "A cover with same title and author already exists.";
