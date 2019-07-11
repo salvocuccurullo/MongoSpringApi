@@ -25,6 +25,7 @@ public class CoverWorker {
 	private String spotifyAlbumUrl = "";
 	private String review = "";
 	private float vote;
+	private String thumbnail = "";
 	
 	
 	public CoverWorker(String fileName, String name, String author) {
@@ -154,6 +155,16 @@ public class CoverWorker {
 
     public void setVote(float vote) {
         this.vote = vote;
+    }
+
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
     
 }

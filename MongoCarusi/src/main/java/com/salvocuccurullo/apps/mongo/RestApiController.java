@@ -364,6 +364,7 @@ public class RestApiController {
         return res;
     }
 
+    /*
     @RequestMapping(value = "/createCover2", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public JsonObject createCover2(@RequestBody Cover cover, UriComponentsBuilder ucBuilder) {
 
@@ -450,7 +451,8 @@ public class RestApiController {
         return json;
 
     }
-
+    */
+    
     private String updateCover(Cover e_cover, CoverWorker coverWorker) {
         
         String remotePath = env.getProperty("remote.repo.baseurl", "");
@@ -466,9 +468,11 @@ public class RestApiController {
                 if (coverWorker.getFileName().startsWith("http")) {
                     e_cover.setFileName(coverWorker.getFileName());
                     e_cover.setLocation(coverWorker.getFileName());
+                    e_cover.setThumbnail(coverWorker.getThumbnail());
                 } else {
                     e_cover.setFileName(coverWorker.getFileName());
                     e_cover.setLocation(remotePath + coverWorker.getFileName());
+                    e_cover.setThumbnail(remotePath + coverWorker.getFileName());
                 }
             }
     
@@ -522,8 +526,10 @@ public class RestApiController {
         Cover ncover = new Cover(coverWorker.getFileName(), coverWorker.getName(), coverWorker.getAuthor());
         if (coverWorker.getFileName().startsWith("http")) {
             ncover.setLocation(coverWorker.getFileName());
+            ncover.setThumbnail(coverWorker.getThumbnail());
         } else {
             ncover.setLocation(remotePath + coverWorker.getFileName());
+            ncover.setThumbnail(remotePath + coverWorker.getFileName());
         }
         ncover.setType("remote");
         ncover.setYear(coverWorker.getYear());

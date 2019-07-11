@@ -30,6 +30,7 @@ public class Cover {
 	private String spotifyUrl = "";
 	private String spotifyAlbumUrl = "";
 	private HashMap<String, Review> reviews;
+	private String thumbnail;
 	
 	private Date create_ts;
 	private Date update_ts;
@@ -181,6 +182,14 @@ public class Cover {
 
     public void setReviews(HashMap<String, Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
 
