@@ -115,7 +115,8 @@ public class RestApiController {
         }
 
         logger.info("Get covers by search string called. Query param: " + search);
-        Sort sort = new Sort(Direction.ASC, Arrays.asList("author", "year", "name"));
+        //Sort sort = new Sort(Direction.ASC, Arrays.asList("author", "year", "name"));
+        Sort sort = Sort.by(Direction.ASC, Arrays.asList("author", "year", "name"));
         covers = (ArrayList<Cover>) repository.findBySearch(search, year, sort);
         logger.info("Get covers by name result:" + new Integer(covers.size()).toString() + " covers found.");
 
@@ -165,7 +166,8 @@ public class RestApiController {
             }
 
             logger.info("Get covers by search string called. Query param: " + search);
-            Sort sort = new Sort(Direction.ASC, Arrays.asList("author", "year", "name"));
+            //Sort sort = new Sort(Direction.ASC, Arrays.asList("author", "year", "name"));
+            Sort sort = Sort.by(Direction.ASC, Arrays.asList("author", "year", "name"));
             covers = (ArrayList<Cover>) repository.findBySearch(search, year, sort);
             total = covers.size();
             logger.info("Get covers by name result:" + new Integer(covers.size()).toString() + " covers found.");
@@ -218,7 +220,8 @@ public class RestApiController {
     public ArrayList<Cover> getLatest(@RequestParam(value = "limit", defaultValue = "15") int limit) {
 
         ArrayList<Cover> covers = new ArrayList<Cover>();
-        Sort sort = new Sort(Direction.DESC, Arrays.asList("update_ts"));
+        //Sort sort = new Sort(Direction.DESC, Arrays.asList("update_ts"));
+        Sort sort = Sort.by(Direction.DESC, Arrays.asList("update_ts"));
         covers = (ArrayList<Cover>) repository.getLatest(limit, sort);
 
         // to be fixed - limit does not work within the query
@@ -245,7 +248,8 @@ public class RestApiController {
         
         try {
                 
-            Sort sort = new Sort(Direction.DESC, Arrays.asList("update_ts"));
+            //Sort sort = new Sort(Direction.DESC, Arrays.asList("update_ts"));
+            Sort sort = Sort.by(Direction.DESC, Arrays.asList("update_ts"));
             covers = (ArrayList<Cover>) repository.getLatest(limit, sort);
             total = covers.size();
     
