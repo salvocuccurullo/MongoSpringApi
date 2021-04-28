@@ -1,7 +1,6 @@
 package com.salvocuccurullo.apps.mongo;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,7 +81,7 @@ public class RestApiController {
 
         logger.info("Get covers by name called. Query param: " + coverName);
         covers = (ArrayList<Cover>) repository.findByName(coverName);
-        logger.info("Get covers by name result:" + new Integer(covers.size()).toString() + " covers found.");
+        logger.info("Get covers by name result:" + Integer.valueOf(covers.size()).toString() + " covers found.");
 
         for (Cover cover : covers) {
             logger.debug(cover.getFileName() + " -> " + cover.getName());
@@ -116,9 +114,11 @@ public class RestApiController {
 
         logger.info("Get covers by search string called. Query param: " + search);
         //Sort sort = new Sort(Direction.ASC, Arrays.asList("author", "year", "name"));
-        Sort sort = Sort.by(Direction.ASC, Arrays.asList("author", "year", "name"));
+        Sort sort = Sort.by("author").ascending().and(
+            Sort.by("year").ascending().and(
+            Sort.by("name").ascending()));
         covers = (ArrayList<Cover>) repository.findBySearch(search, year, sort);
-        logger.info("Get covers by name result:" + new Integer(covers.size()).toString() + " covers found.");
+        logger.info("Get covers by name result:" + Integer.valueOf(covers.size()).toString() + " covers found.");
 
         if (logger.isDebugEnabled()) {
             for (Cover cover : covers) {
@@ -167,10 +167,12 @@ public class RestApiController {
 
             logger.info("Get covers by search string called. Query param: " + search);
             //Sort sort = new Sort(Direction.ASC, Arrays.asList("author", "year", "name"));
-            Sort sort = Sort.by(Direction.ASC, Arrays.asList("author", "year", "name"));
+            Sort sort = Sort.by("author").ascending().and(
+                    Sort.by("year").ascending().and(
+                    Sort.by("name").ascending()));
             covers = (ArrayList<Cover>) repository.findBySearch(search, year, sort);
             total = covers.size();
-            logger.info("Get covers by name result:" + new Integer(covers.size()).toString() + " covers found.");
+            logger.info("Get covers by name result:" + Integer.valueOf(covers.size()).toString() + " covers found.");
 
             if (logger.isDebugEnabled()) {
                 for (Cover cover : covers) {
@@ -208,7 +210,7 @@ public class RestApiController {
 
         covers = (ArrayList<Cover>) repository.findAll();
 
-        logger.info("Get all covers: " + new Integer(covers.size()).toString() + " found.");
+        logger.info("Get all covers: " + Integer.valueOf(covers.size()).toString() + " found.");
         for (Cover cover : covers) {
             logger.debug("(" + cover.getType() + ") " + cover.getFileName() + " -> " + cover.getName());
         }
@@ -221,7 +223,7 @@ public class RestApiController {
 
         ArrayList<Cover> covers = new ArrayList<Cover>();
         //Sort sort = new Sort(Direction.DESC, Arrays.asList("update_ts"));
-        Sort sort = Sort.by(Direction.DESC, Arrays.asList("update_ts"));
+        Sort sort = Sort.by("update_ts").ascending();
         covers = (ArrayList<Cover>) repository.getLatest(limit, sort);
 
         // to be fixed - limit does not work within the query
@@ -249,7 +251,7 @@ public class RestApiController {
         try {
                 
             //Sort sort = new Sort(Direction.DESC, Arrays.asList("update_ts"));
-            Sort sort = Sort.by(Direction.DESC, Arrays.asList("update_ts"));
+            Sort sort = Sort.by("update_ts").ascending();
             covers = (ArrayList<Cover>) repository.getLatest(limit, sort);
             total = covers.size();
     
