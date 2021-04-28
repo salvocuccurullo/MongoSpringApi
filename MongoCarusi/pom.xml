@@ -95,7 +95,7 @@
 						  <additionalProperties>
 								<encoding>${project.build.sourceEncoding}</encoding>
 								<mongodb-driver>${mongodb.version}</mongodb-driver>
-								<spring-version>${spring.version}</spring-version>
+								<spring-version>${project.version}</spring-version>
 						  </additionalProperties>
 						</configuration>
                     </execution>
