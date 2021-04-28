@@ -30,6 +30,12 @@
         </dependency>
         
         <!--  Added by Salva -->
+
+	<!-- This is needed after spring boot 2.3.0 -->
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-validation</artifactId>
+	</dependency>
         
         <!-- https://mvnrepository.com/artifact/org.mongodb/mongodb-driver -->
 	    <dependency>
