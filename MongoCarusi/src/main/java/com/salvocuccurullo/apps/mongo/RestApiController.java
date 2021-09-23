@@ -7,6 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -162,6 +163,8 @@ public class RestApiController {
             } catch (NumberFormatException nfe) {
                 logger.debug("search is not a number");
             }
+
+            search = Pattern.quote(search);
 
             logger.info("Get covers by search string called. Query param: " + search);
             //Sort sort = new Sort(Direction.ASC, Arrays.asList("author", "year", "name"));
