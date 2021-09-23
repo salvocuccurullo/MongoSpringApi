@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.mongodb.internal.build.MongoDriverVersion;
 import com.salvocuccurullo.apps.mongo.models.Cover;
 import com.salvocuccurullo.apps.mongo.models.CoverWorker;
 import com.salvocuccurullo.apps.mongo.models.JsonObject;
@@ -52,6 +53,7 @@ public class RestApiController {
 
         JsonObject res = new JsonObject(message, result);
         HashMap<String, Object> payload = new HashMap<String, Object>();
+        String mongoVersion  = MongoDriverVersion.VERSION;
 
         payload.put("version", buildProperties.getVersion());
         payload.put("name", buildProperties.getName());
@@ -60,6 +62,7 @@ public class RestApiController {
         payload.put("spring_version", buildProperties.get("spring-version"));
         payload.put("encoding", buildProperties.get("encoding"));
         payload.put("mongo_db_driver", buildProperties.get("mongodb-driver"));
+        payload.put("mongo_driver_version", mongoVersion);
 
         res.setMessage(message);
         res.setResult(result);
