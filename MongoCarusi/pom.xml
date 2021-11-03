@@ -107,7 +107,7 @@
                             <executable>true</executable>
                             <additionalProperties>
                                 <encoding>${project.build.sourceEncoding}</encoding>
-                                <mongodb-driver>${mongodb.version}</mongodb-driver>
+                                <!--<mongodb-driver>${mongodb.version}</mongodb-driver>-->
                                 <spring-version>${project.version}</spring-version>
                             </additionalProperties>
                         </configuration>
