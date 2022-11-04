@@ -5,7 +5,7 @@
 
     <groupId>com.salvocuccurullo.apps.mongo</groupId>
     <artifactId>mongocarusi</artifactId>
-    <version>1.2.36</version>
+    <version>VERSION_PLACEHOLDER</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
