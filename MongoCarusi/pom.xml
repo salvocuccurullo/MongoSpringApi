@@ -5,7 +5,7 @@
 
     <groupId>com.salvocuccurullo.apps.mongo</groupId>
     <artifactId>mongocarusi</artifactId>
-    <version>1.2.35</version>
+    <version>1.2.36</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -33,6 +33,20 @@
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-utils</artifactId>
             <version>3.0.16</version>
+        </dependency>
+
+        <!-- CVE-2022-31692 -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>5.7.5</version>
+        </dependency>
+
+        <!-- CVE-2022-25857 -->
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.33</version>
         </dependency>
 
         <!-- End Security -->
